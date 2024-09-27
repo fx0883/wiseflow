@@ -86,8 +86,9 @@ async def general_crawler(url: str, logger) -> tuple[int, Union[set, dict]]:
     if domain in scraper_map:
         return await scraper_map[domain](url, logger)
 
+    # url = "https://www.xingzuobaike.com/xingzuo/"
     # 1. get the content with httpx
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(follow_redirects=True) as client:
         for retry in range(2):
             try:
                 response = await client.get(url, headers=header, timeout=30)

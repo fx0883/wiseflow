@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI, BackgroundTasks
 from pydantic import BaseModel
 from typing import Literal, Optional
@@ -43,3 +44,7 @@ def read_root():
 async def call_to_feed(background_tasks: BackgroundTasks, request: Request):
     background_tasks.add_task(message_manager, _input=request.model_dump())
     return {"msg": "received well"}
+
+
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="localhost", port=8077, reload=True)

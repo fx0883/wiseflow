@@ -19,7 +19,7 @@ async def mp_crawler(url: str, logger) -> tuple[int, Union[set, dict]]:
 
     url = url.replace("http://", "https://", 1)
 
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(follow_redirects=True) as client:
         for retry in range(2):
             try:
                 response = await client.get(url, headers=header, timeout=30)

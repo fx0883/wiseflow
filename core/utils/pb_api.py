@@ -2,16 +2,20 @@ import os
 from pocketbase import PocketBase  # Client also works the same
 from pocketbase.client import FileUpload
 from typing import BinaryIO, Optional, List, Dict
-
+import traceback
 
 class PbTalker:
     def __init__(self, logger) -> None:
         # 1. base initialization
-        url = os.environ.get('PB_API_BASE', "http://127.0.0.1:8090")
+        # url = os.environ.get("PB_API_BASE", "http://127.0.0.1:8090/")
+        url = "http://127.0.0.1:8090/"
+        print('pb_url = '+url)
         self.logger = logger
         self.logger.debug(f"initializing pocketbase client: {url}")
         self.client = PocketBase(url)
-        auth = os.environ.get('PB_API_AUTH', '')
+        # auth = os.environ.get("PB_API_AUTH", "test@example.com|1234567890")
+
+        auth = "test@example.com|1234567890"
         if not auth or "|" not in auth:
             self.logger.warning("invalid email|password found, will handle with not auth, make sure you have set the collection rule by anyone")
         else:
